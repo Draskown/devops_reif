@@ -1,3 +1,3 @@
-# devops_reif
+# Introduction to DevOps
 
 Ansible and docker tasks from the Raiffeisenbank course
