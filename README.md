@@ -1,6 +1,6 @@
 # Introduction to DevOps
 
-Ansible and docker tasks from the Raiffeisenbank course
+Ansible and Docker tasks from the Raiffeisenbank course
 
 ## Ansible
 Updates the localhost, removes the oldest kernel versions except two latest, reboots the hosts. Although the reboot task does not work for the localhost due to the closure of the operating node.
