@@ -1,0 +1,3 @@
+---
+# vars file for update-os
+kernel_versions_to_keep: 2

@@ -1,0 +1,61 @@
+---
+# Tasks file for update-os
+- name: Update the system using Pacman
+  block:
+    - name: Update packages using pacman ignoring tree
+      ansible.builtin.command: "pacman -Syu --noconfirm --ignore=tree"
+      changed_when: false
+
+  when: ansible_pkg_mgr == "pacman"
+
+- name: Upgrade system using apt
+  block:
+    - name: Upgrade OS and update packages except tree
+      ansible.builtin.apt:
+        upgrade: dist
+        update_cache: true
+        autoremove: true
+        autoclean: true
+        state: latest
+        exclude: tree
+
+    - name: Install byobu
+      ansible.builtin.apt:
+        name: byobu
+        state: present
+
+    - name: Remove all of the old kernels instead the two latest
+      ansible.builtin.command: "purge-old-kernels --keep {{ kernel_versions_to_keep }} -qy"
+
+    - name: Remove byobu
+      ansible.builtin.apt:
+        name: byobu
+        state: absent
+  when: ansible_pkg_mgr == "apt"
+
+- name: Update OS using yum
+  block:
+    - name: Upgrade OS and update packages except tree
+      ansible.builtin.yum:
+        check_update: true
+        name: "*"
+        exclude: tree
+
+    - name: Install yum-utils
+      ansible.builtin.yum:
+        name: yum-utils
+        state: present
+
+    - name: Remove all of the old kernels instead the two latest
+      ansible.builtin.command: "package-cleanup --old-kernels --count={{ kernel_versions_to_keep }}"
+
+    - name: Remove yum-utils
+      ansible.builtin.yum:
+        name: yum-utils
+        state: absent
+  when: ansible_pkg_mgr == "yum"
+
+- name: Reboot Hosts
+  ansible.builtin.reboot:
+    msg: "Reboot initiated by Ansible"
+    reboot_timeout: 300

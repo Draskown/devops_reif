@@ -1,7 +1,0 @@
----
-- hosts: servers
-  gather_facts: False
-  connection: local
-  tasks:
-    - name: Ping taks
-      ping:

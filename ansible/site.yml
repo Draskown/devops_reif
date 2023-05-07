@@ -1,0 +1,7 @@
+---
+- name: Update OS
+  hosts: servers
+  become: true
+  connection: local
+  roles:
+    - update-os
