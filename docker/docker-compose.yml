@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: Python-app
+    ports: 
+      - "5000:5000"
+    depends_on:
+      - redis
+    environment:
+      - CONTAINERENV=True
+    volumes:
+      - ./container-data:./
+    networks:
+      - main
+  
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    networks:
+      - main
+
+networks:
+  main:

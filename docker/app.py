@@ -24,8 +24,8 @@ def process_request():
     if container_env is None or container_env.lower() != "true":
         return jsonify({"error": "Переменная CONTAINERENV не задана или имеет неправильное значение."}), 500
 
-    mail_filename = "files/mail.txt"
-    name_filename = "files/name.txt"
+    mail_filename = "mail.txt"
+    name_filename = "name.txt"
 
     try:
         with open(mail_filename, "r") as mail_file:
