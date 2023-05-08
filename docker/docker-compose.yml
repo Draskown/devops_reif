@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: Python-app
+    container_name: python-app
     ports: 
       - "5000:5000"
     depends_on:
@@ -13,7 +13,9 @@ services:
     environment:
       - CONTAINERENV=True
     volumes:
-      - ./container-data:./
+      - ./container-data/mail.txt:/mail.txt
+      - ./container-data/name.txt:/name.txt
+      - ./templates:/templates
     networks:
       - main
   
